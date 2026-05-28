@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="Avalonia Declarative UI Example/Avalonia Declarative UI Example.csproj" />
+  <Project Path="Avalonia Declarative UI Example.Shared/Avalonia Declarative UI Example.Shared.csproj" />
+  <Project Path="Avalonia Declarative UI Example.Desktop/Avalonia Declarative UI Example.Desktop.csproj" />
+  <Project Path="Avalonia Declarative UI Example.Android/Avalonia Declarative UI Example.Android.csproj" />
 </Solution>

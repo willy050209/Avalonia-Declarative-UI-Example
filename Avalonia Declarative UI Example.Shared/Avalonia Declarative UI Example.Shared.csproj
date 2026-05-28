@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<!-- 跨平台共享套件 -->
+	<ItemGroup>
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
+		<PackageReference Include="Avalonia.Markup.Declarative" Version="12.0.0" />
+		<PackageReference Include="Avalonia.HarfBuzz" Version="12.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="System" />
+		<Using Include="Avalonia" />
+		<Using Include="Avalonia.Controls" />
+		<Using Include="Avalonia.Controls.ApplicationLifetimes" />
+		<Using Include="Avalonia.Data" />
+		<Using Include="Avalonia.Interactivity" />
+		<Using Include="Avalonia.Layout" />
+		<Using Include="Avalonia.Markup.Declarative" />
+		<Using Include="Avalonia.Media" />
+		<Using Include="Avalonia.Themes.Fluent" />
+	</ItemGroup>
+</Project>

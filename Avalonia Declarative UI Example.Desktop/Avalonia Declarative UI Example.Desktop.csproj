@@ -7,23 +7,25 @@
 		<TrimMode Condition="'$(Configuration)' != 'Debug'">copyused</TrimMode>
 		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)' != 'Debug'">
 		<PublishAot>true</PublishAot>
 	</PropertyGroup>
+
+	<!-- 引用共用核心專案 -->
 	<ItemGroup>
-		<None Remove=".gitignore" />
+		<ProjectReference Include="..\Avalonia Declarative UI Example.Shared\Avalonia Declarative UI Example.Shared.csproj" />
 	</ItemGroup>
+
+	<!-- Desktop 專屬套件 -->
+	<ItemGroup>
+		<PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
+		<PackageReference Include="Tmds.DBus.Protocol" Version="0.92.0" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<TrimmableAssembly Include="Avalonia.Themes.Fluent" />
 		<TrimmableAssembly Include="Avalonia.Themes.Default" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
-		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
-		<PackageReference Include="Avalonia.Markup.Declarative" Version="12.0.1-preview1" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
-		<PackageReference Include="Tmds.DBus.Protocol" Version="0.92.0" />
 	</ItemGroup>
 
 	<ItemGroup>

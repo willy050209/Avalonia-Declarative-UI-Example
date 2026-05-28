@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net10.0-android</TargetFramework>
+		<SupportedOSPlatformVersion>23.0</SupportedOSPlatformVersion>
+		<ApplicationId>com.example.avaloniadeclarative</ApplicationId>
+		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AndroidManifest>AndroidManifest.xml</AndroidManifest>
+	</PropertyGroup>
+
+	<!-- 引用共用核心專案 -->
+	<ItemGroup>
+		<ProjectReference Include="..\Avalonia Declarative UI Example.Shared\Avalonia Declarative UI Example.Shared.csproj" />
+	</ItemGroup>
+
+	<!-- Android 專屬與共享套件的顯式宣告，確保連結器與資源建置器正確處理 -->
+	<ItemGroup>
+		<PackageReference Include="Avalonia.Android" Version="12.0.0" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
+		<PackageReference Include="Avalonia.Markup.Declarative" Version="12.0.0" />
+		<PackageReference Include="Avalonia.HarfBuzz" Version="12.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="System" />
+		<Using Include="Avalonia" />
+		<Using Include="Avalonia.Controls" />
+		<Using Include="Avalonia.Controls.ApplicationLifetimes" />
+		<Using Include="Avalonia.Data" />
+		<Using Include="Avalonia.Interactivity" />
+		<Using Include="Avalonia.Layout" />
+		<Using Include="Avalonia.Markup.Declarative" />
+		<Using Include="Avalonia.Media" />
+		<Using Include="Avalonia.Themes.Fluent" />
+	</ItemGroup>
+</Project>
