@@ -14,16 +14,5 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Using Include="System" />
-		<Using Include="Avalonia" />
-		<Using Include="Avalonia.Controls" />
-		<Using Include="Avalonia.Controls.ApplicationLifetimes" />
-		<Using Include="Avalonia.Data" />
-		<Using Include="Avalonia.Interactivity" />
-		<Using Include="Avalonia.Layout" />
-		<Using Include="Avalonia.Markup.Declarative" />
-		<Using Include="Avalonia.Media" />
-		<Using Include="Avalonia.Themes.Fluent" />
-	</ItemGroup>
+
 </Project>

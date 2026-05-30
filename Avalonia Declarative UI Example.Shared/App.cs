@@ -1,9 +1,10 @@
-// filepath: Avalonia Declarative UI Example/Avalonia Declarative UI Example.Shared/App.cs
+﻿// filepath: Avalonia Declarative UI Example/Avalonia Declarative UI Example.Shared/App.cs
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Declarative;
 using Avalonia_Declarative_UI_Example.Shared.Views;
+
 
 namespace Avalonia_Declarative_UI_Example.Shared;
 
@@ -32,9 +33,9 @@ public partial class App : Application
             // ====================================================
             // 在桌面端，我們需要建立一個視窗 (Window)，並將 MainView 設為該視窗的內容。
             desktop.MainWindow = new Window()
-                .Title("Avalonia Declarative Template (Desktop)")
-                .Width(800)
-                .Height(600)
+                .Title($"{Config.WindowsTitle} v{Config.Version}")
+                .Width(Config.WindowWidth)
+                .Height(Config.WindowHeight)
                 .Content(ViewFactory.Create<MainView>());
         }
         else if (ApplicationLifetime is IActivityApplicationLifetime activityLifetime)

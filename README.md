@@ -26,6 +26,8 @@
 │
 ├── 📂 Avalonia Declarative UI Example.Shared      # 【核心共用專案】
 │   ├── App.cs                                     # 應用程式初始化與跨平台 UI 生命週期配置
+│   ├── Config.cs                                  # 全域靜態組態配置（視窗大小、標題、版本等）
+│   ├── GlobalUsings.cs                            # 共享專案全域引用配置
 │   ├── 📂 Services                                # 【服務層 / Model】
 │   │   └── GreetingService.cs                     # 提供展示資料的服務實例
 │   ├── 📂 ViewModels                              # 【檢視模型層】
@@ -35,11 +37,13 @@
 │
 ├── 📂 Avalonia Declarative UI Example.Desktop     # 【Desktop 執行專案】
 │   ├── Program.cs                                 # 桌面端程式載入點
+│   ├── GlobalUsings.cs                            # 桌面專案全域引用配置
 │   └── ...
 │
 └── 📂 Avalonia Declarative UI Example.Android     # 【Android 執行專案】
     ├── MainActivity.cs                            # Android 主畫面 Activity
     ├── MainApplication.cs                         # Android App 初始化與 DI 註冊
+    ├── GlobalUsings.cs                            # Android 專案全域引用配置
     └── AndroidManifest.xml                        # Android 清單設定檔
 ```
 
@@ -112,4 +116,21 @@ protected override StyleGroup? BuildStyles() =>
     new Style<Button>(x => x.Class(":pointerover")) // 懸停效果
         .Background(Brushes.DodgerBlue)
 ];
+```
+
+### 5. 全域靜態設定 (Config)
+在 [Config.cs](./Avalonia%20Declarative%20UI%20Example.Shared/Config.cs) 中集中管理應用程式全域靜態配置，如視窗大小、標題及版本。避免將硬編碼（Hardcoded）的字串散落於各個專案中：
+
+```csharp
+// 全域靜態常數
+public static string WindowsTitle { get; } = "Avalonia Declarative Template (Desktop)";
+public static int WindowWidth { get; } = 800;
+```
+
+並在共用啟動檔 [App.cs](./Avalonia%20Declarative%20UI%20Example.Shared/App.cs) 中直接參考：
+```csharp
+desktop.MainWindow = new Window()
+    .Title($"{Config.WindowsTitle} v{Config.Version}")
+    .Width(Config.WindowWidth)
+    .Height(Config.WindowHeight)
 ```
