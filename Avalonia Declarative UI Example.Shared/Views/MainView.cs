@@ -1,10 +1,10 @@
 ﻿// filepath: Avalonia Declarative UI Example/Avalonia Declarative UI Example.Shared/Views/MainView.cs
+using Avalonia.Controls;
+using Avalonia.Controls.Presenters;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Styling;
 using Avalonia_Declarative_UI_Example.ViewModels;
-using Button = Avalonia.Controls.Button;
-using TextBlock = Avalonia.Controls.TextBlock;
 
 namespace Avalonia_Declarative_UI_Example.Shared.Views;
 
@@ -31,9 +31,10 @@ public class MainView(MainViewModel viewModel) : ViewBase<MainViewModel>(viewMod
             .FontSize(16)
             .FontWeight(FontWeight.Medium),
 
-        // 定義按鈕在滑鼠懸停 (Pointer Over) 時的樣式變更 (Hover 效果)
-        new Style<Button>(x => x.Class(":pointerover"))
+        // 定義 Button 在滑鼠懸停 (:pointerover) 時的樣式
+        new Style<Button>(x => x.OfType<Button>().Class(":pointerover").Template().OfType<ContentPresenter>())
             .Background(Brushes.DodgerBlue)
+            .Foreground(Brushes.White)
     ];
 
     /// <summary>
