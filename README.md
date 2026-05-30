@@ -90,7 +90,7 @@ new StackPanel()
 
 ### 2. 如何使用 MVVM 進行資料繫結 (Data Binding)？
 * **ViewModel 的屬性通知**：在 [ViewModels/MainViewModel.cs](./Avalonia%20Declarative%20UI%20Example.Shared/ViewModels/MainViewModel.cs) 中，只要欄位標記了 `[ObservableProperty]`，原始碼產生器就會在背景產生實作變更通知的公開屬性。
-* **View 的強型別繫結**：在 [Views/MainView.cs](./Avalonia%20Declarative%20UI%20Example.Shared/Views/MainView.cs) 中，使用拉姆達表達式（Lambda）直接綁定 ViewModel 的屬性，享有強型別檢查：
+* **View 的強型別繫結**：在 [Views/MainView.cs](./Avalonia%20Declarative%20UI%20Example.Shared/Views/MainView.cs) 中，使用 Lambda 表達式直接綁定 ViewModel 的屬性，享有強型別檢查：
   ```csharp
   new TextBlock()
       .Text(vm, x => x.GreetingText) // 只要 vm.GreetingText 改變，文字框內容就會自動重繪
