@@ -134,3 +134,53 @@ desktop.MainWindow = new Window()
     .Width(Config.WindowWidth)
     .Height(Config.WindowHeight)
 ```
+
+### 6. 異步程式設計與狀態繫結 (Async/Await & State Binding)
+為了維持 UI 的流暢響應，避免耗時的後台任務（如 API 請求或資料庫操作）凍結使用者介面，我們使用了現代 C# 的 `async/await` 異步程式設計：
+
+* **ViewModel 中的狀態通知與異步任務**：
+  在 [MainViewModel.cs](./Avalonia%20Declarative%20UI%20Example.Shared/ViewModels/MainViewModel.cs) 中宣告 `IsBusy` 用以標示當前忙碌狀態，並使用 `async Task` 來定義高負載任務：
+  ```csharp
+  [ObservableProperty]
+  private bool _isBusy;
+
+  [RelayCommand]
+  public async Task DoHighLoadTasks()
+  {
+      IsBusy = true; // 開始處理，進入忙碌狀態
+      try
+      {
+          await GreetingService.HighLoadTasks(); // 異步等待耗時任務
+      }
+      finally
+      {
+          IsBusy = false; // 結束忙碌狀態
+      }
+  }
+  ```
+
+* **View 中的狀態繫結 (Binding)**：
+  在 [MainView.cs](./Avalonia%20Declarative%20UI%20Example.Shared/Views/MainView.cs) 中，按鈕的啟用狀態 (`IsEnabled`) 直接與 `!IsBusy` 進行繫結。當背景正在執行耗時任務時，按鈕會自動被禁用，防止重複點擊：
+  ```csharp
+  new Button()
+      .Content("執行高負載任務")
+      .IsEnabled(vm, x => !x.IsBusy) // 當 IsBusy 為 true 時自動禁用按鈕
+      .OnClick(async _ => await vm.DoHighLoadTasks()) // 異步點擊事件觸發
+  ```
+
+---
+
+## ⚡ AOT（Ahead-of-Time）編譯的優勢與限制
+
+本模板專案在 Desktop 端設定了 AOT 編譯支援（即 `PublishAot = true`）。
+
+### 🌟 AOT 的主要優勢
+1. **極速啟動 (Instant Startup)**：傳統 .NET 應用需要在執行時透過 JIT (Just-In-Time) 編譯器將 MSIL 翻譯成機器碼，而 AOT 在編譯期就已直接編譯為原生機器碼，大幅縮短應用程式啟動時間（這在 Desktop 軟體尤為明顯）。
+2. **較低的記憶體佔用 (Low Memory Footprint)**：因為不需要載入 JIT 編譯器及保留大量的編譯元數據 (Metadata)，執行時的實體記憶體佔用顯著降低。
+3. **優異的檔案裁剪 (Tree Shaking)**：編譯器在編譯時會進行嚴格的靜態程式碼分析，將沒有被執行路徑碰觸到的程式碼與套件（例如未使用的系統庫）從產出的執行檔中徹底剃除，產出極度輕量且獨立 (Self-contained) 的執行檔。
+4. **反編譯防護 (Obfuscation By Default)**：因為輸出為純二進位原生機器碼而非包含豐富元數據的 MSIL，極難被 ILSpy 或 dnSpy 等反編譯工具還原為 C# 原始碼，提高商業智財權的安全性。
+
+### ⚠️ AOT 的限制與注意事項
+1. **不支援動態反射 (No Dynamic Reflection)**：AOT 依賴靜態編譯。任何在執行期動態產生程式碼（例如使用 `Reflection.Emit` 或動態解析類型）的程式庫將無法在 AOT 下工作。
+2. **依賴注入的裁剪警告 (DI Trimming Warning)**：本專案在 [Program.cs](./Avalonia%20Declarative%20UI%20Example.Desktop/Program.cs) 中使用 `ActivatorUtilities.CreateInstance` 進行建構子注入。由於相依性注入涉及執行期反射，在編譯 AOT 時可能會觸發裁剪警告（例如 `warning IL2067`）。這意味著程式碼樹分析器無法完全保證哪些建構子會被使用。開發時需特別注意不可隨意移除建構子。
+3. **跨平台 AOT 的建置管線差異**：雖然桌面端（Windows/macOS/Linux）能非常直觀地產出原生單一檔案執行檔，但在行動端 (Android)，AOT 編譯（如 Xamarin AOT 或 NativeAOT-Android）的打包管線與桌面端不同，需要依賴對應平台的建置工作流工具與設定，因此針對 Android 平台發布時通常以標準 JIT / 預先編譯 (AOT profile-guided) 的方式發布較佳。
