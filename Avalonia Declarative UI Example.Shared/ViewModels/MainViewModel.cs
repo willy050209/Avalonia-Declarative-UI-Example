@@ -35,7 +35,7 @@ public partial class MainViewModel : ObservableObject
     /// 系統是否正處於處理狀態（例如正在載入外部資料）。
     /// </summary>
     [ObservableProperty]
-    private bool _isBusy;
+    private bool _isBusy = true;
 
     /// <summary>
     /// 主要建構函式，利用 .NET 內建的相依性注入 (Dependency Injection)。
