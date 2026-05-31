@@ -71,7 +71,15 @@ public class MainView(MainViewModel viewModel) : ViewBase<MainViewModel>(viewMod
                             .Content("點擊更新文字 (Click Me)")
                             .HorizontalAlignment(HorizontalAlignment.Center)
                             // 動作繫結：當按鈕被點擊 (OnClick) 時，執行 ViewModel 內定義的 UpdateGreeting 方法
-                            .OnClick(_ => vm.UpdateGreeting())
+                            .OnClick(_ => vm.UpdateGreeting()),
+
+                        new Button()
+                            .Content("執行高負載任務")
+                            .HorizontalAlignment(HorizontalAlignment.Center)
+                            // 按鈕啟用狀態繫結：當 ViewModel 的 IsBusy 為 false 時，按鈕可用；為 true 時，按鈕禁用
+                            .IsEnabled(vm, x => !x.IsBusy) 
+                            // 動作繫結：當按鈕被點擊 (OnClick) 時，執行 ViewModel 內定義的 DoHighLoadTasks 方法
+                            .OnClick(async _ => await vm.DoHighLoadTasks())
                     )
             );
 }

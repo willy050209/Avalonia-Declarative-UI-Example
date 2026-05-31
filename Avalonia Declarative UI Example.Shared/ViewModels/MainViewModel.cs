@@ -32,6 +32,12 @@ public partial class MainViewModel : ObservableObject
     private int _clickCount = 0;
 
     /// <summary>
+    /// 系統是否正處於處理狀態（例如正在載入外部資料）。
+    /// </summary>
+    [ObservableProperty]
+    private bool _isBusy;
+
+    /// <summary>
     /// 主要建構函式，利用 .NET 內建的相依性注入 (Dependency Injection)。
     /// 這裡注入了 GreetingService，以符合依賴反轉原則 (DIP) 與職責分離。
     /// </summary>
@@ -56,5 +62,24 @@ public partial class MainViewModel : ObservableObject
         // 2. 結合服務取得的基本問候語與累加計數，更新 GreetingText。
         // 當此屬性更新時，UI 上綁定 GreetingText 的 TextBlock 就會同步且自動重繪更新！
         GreetingText = $"{_greetingService.GetGreetingMessage()}\n按鈕已被點擊 {ClickCount} 次！";
+    }
+
+    /// <summary>
+    /// 模擬執行一個高負載的任務，例如從網路載入資料或進行複雜計算。
+    /// </summary>
+    [RelayCommand]
+    public async Task DoHighLoadTasks()
+    {
+        IsBusy = true; // 開始處理，設定忙碌狀態
+        GreetingText = "正在執行高負載任務..."; // 更新招呼語以反映正在處理的狀態
+        try
+        {
+            await GreetingService.HighLoadTasks(); // 執行模擬高負載任務
+            GreetingText = "高負載任務完成！"; // 更新招呼語以反映任務完成
+        }
+        finally
+        {
+            IsBusy = false; // 無論成功與否，都結束忙碌狀態
+        }
     }
 }

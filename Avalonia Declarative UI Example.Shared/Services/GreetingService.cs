@@ -18,4 +18,13 @@ public sealed class GreetingService
         // 這裡在真實專案中可以擴充為從 API、本地資料庫或設定檔讀取資料。
         return "Hello from Avalonia C# Markup & MVVM!";
     }
+
+    /// <summary>
+    /// 模擬一個高負載的任務，例如從網路 API 取得資料或進行複雜計算。
+    /// </summary>
+    public static Task HighLoadTasks()
+    {
+        // 模擬高負載任務
+        return Task.Delay(1000);
+    }
 }
